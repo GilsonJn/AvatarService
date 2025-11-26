@@ -8,7 +8,9 @@ import br.com.g3.avatar_service.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,7 +41,7 @@ public class UsuarioService {
     // PESQUISAR USUÁRIO POR ID
     public DadosResponseUsuario findById(Long id) {
         Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado com esse id."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
         return toResponseUsuario(usuario);
     }
 
@@ -56,7 +58,7 @@ public class UsuarioService {
     // ATUALIZAR PONTOS
     public DadosResponseUsuario adicionarPontos(Long id, int pontosGanhos) {
         Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado com esse id."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
 
         int pontosAtuais = usuario.getPontosExperiencia();
         int novosPontos = pontosAtuais + pontosGanhos;
@@ -81,7 +83,7 @@ public class UsuarioService {
     // "DELETAR" USUÁRIO
     public DadosResponseUsuario deleteUsuario(Long id) {
         Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado com esse id."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
         usuario.excluir();
         Usuario usuarioAtualizado = usuarioRepository.save(usuario);
         return toResponseUsuario(usuario);
