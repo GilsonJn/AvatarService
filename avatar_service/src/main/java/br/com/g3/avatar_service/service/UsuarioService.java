@@ -58,7 +58,7 @@ public class UsuarioService {
     // ATUALIZAR PONTOS
     public DadosResponseUsuario adicionarPontos(Long id, int pontosGanhos) {
         Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado!"));
 
         int pontosAtuais = usuario.getPontosExperiencia();
         int novosPontos = pontosAtuais + pontosGanhos;
@@ -83,7 +83,7 @@ public class UsuarioService {
     // "DELETAR" USUÁRIO
     public DadosResponseUsuario deleteUsuario(Long id) {
         Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado!"));
         usuario.excluir();
         Usuario usuarioAtualizado = usuarioRepository.save(usuario);
         return toResponseUsuario(usuario);
