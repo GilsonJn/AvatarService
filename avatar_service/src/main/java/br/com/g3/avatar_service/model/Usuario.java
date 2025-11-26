@@ -35,10 +35,17 @@ public class Usuario {
         this.ativo = true;
     }
 
+    public void atualizarInformacoes(DadosAtualizarUsuario dados) {
+        if(dados.nome() != null) {
+            this.nome = dados.nome();
+        }
+        if(dados.email() != null) {
+            this.email = dados.email();
+        }
+    }
+
     public void excluir() {
         this.ativo = false;
     }
-
-
 
 }

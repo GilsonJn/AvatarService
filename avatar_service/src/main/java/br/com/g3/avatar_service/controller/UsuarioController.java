@@ -1,14 +1,13 @@
 package br.com.g3.avatar_service.controller;
 
+import br.com.g3.avatar_service.model.DadosAtualizarUsuario;
 import br.com.g3.avatar_service.model.DadosCadastroUsuario;
 import br.com.g3.avatar_service.model.DadosResponseUsuario;
-import br.com.g3.avatar_service.model.Usuario;
 import br.com.g3.avatar_service.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -51,12 +50,14 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioAtualizado);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<DadosResponseUsuario> updateUsuario(@PathVariable Long id, @Valid @RequestBody DadosCadastroUsuario dados) {
-        DadosResponseUsuario updateUsuario = usuarioService.updateUsuario(id, dados);
+    // ENDPOINT DE ATUALIZAÇÃO DE USUÁRIO
+    @PutMapping()
+    public ResponseEntity<DadosResponseUsuario> updateUsuario(@Valid @RequestBody DadosAtualizarUsuario dados) {
+        DadosResponseUsuario updateUsuario = usuarioService.updateUsuario(dados);
         return ResponseEntity.ok(updateUsuario);
     }
 
+    // ENDPOINT DE DELETAR USUÁRIO
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUsuario(@PathVariable Long id) {
         usuarioService.deleteUsuario(id);

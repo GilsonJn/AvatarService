@@ -1,5 +1,6 @@
 package br.com.g3.avatar_service.service;
 
+import br.com.g3.avatar_service.model.DadosAtualizarUsuario;
 import br.com.g3.avatar_service.model.DadosCadastroUsuario;
 import br.com.g3.avatar_service.model.DadosResponseUsuario;
 import br.com.g3.avatar_service.model.Usuario;
@@ -70,12 +71,9 @@ public class UsuarioService {
     }
 
     // ATUALIZAR USUÁRIO
-    public DadosResponseUsuario updateUsuario(Long id, DadosCadastroUsuario dados) {
-        Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado com esse id."));
-
-        usuario.setNome(dados.nome());
-        usuario.setEmail(dados.email());
+    public DadosResponseUsuario updateUsuario(DadosAtualizarUsuario dados) {
+        Usuario usuario = usuarioRepository.getReferenceById(dados.id());
+        usuario.atualizarInformacoes(dados);
         Usuario usuarioAtualizado = usuarioRepository.save(usuario);
         return toResponseUsuario(usuarioAtualizado);
     }
