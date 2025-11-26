@@ -6,6 +6,9 @@ import br.com.g3.avatar_service.model.DadosResponseUsuario;
 import br.com.g3.avatar_service.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +24,8 @@ public class UsuarioController {
 
     // ENDPOINT DE PESQUISA DOS USUÁRIOS
     @GetMapping
-    public ResponseEntity<List<DadosResponseUsuario>> getAllUsuarios() {
-        return ResponseEntity.ok(usuarioService.findAll());
+    public ResponseEntity<Page<DadosResponseUsuario>> getAllUsuarios(@PageableDefault(size = 2, sort = {"nome"}) Pageable paginacao) {
+        return ResponseEntity.ok(usuarioService.findAll(paginacao));
     }
 
     // ENDPOINT DE PESQUISA POR ID

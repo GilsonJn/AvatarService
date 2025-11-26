@@ -6,6 +6,8 @@ import br.com.g3.avatar_service.model.DadosResponseUsuario;
 import br.com.g3.avatar_service.model.Usuario;
 import br.com.g3.avatar_service.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,10 +32,8 @@ public class UsuarioService {
     }
 
     // PESQUISAR TODOS OS USUÁRIOS
-    public List<DadosResponseUsuario> findAll() {
-        return usuarioRepository.findAll().stream()
-                .map(this:: toResponseUsuario)
-                .collect(Collectors.toList());
+    public Page<DadosResponseUsuario> findAll(Pageable paginacao) {
+        return usuarioRepository.findAllByAtivoTrue(paginacao).map(this:: toResponseUsuario);
     }
 
     // PESQUISAR USUÁRIO POR ID
