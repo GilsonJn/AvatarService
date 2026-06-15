@@ -14,7 +14,7 @@ WORKDIR /app
 RUN addgroup -S mapgroup && adduser -S mapuser -G mapgroup
 
 # Copia apenas o executável do Estágio 1, deixando o código-fonte para trás
-COPY --from=builder /build/target/map-api.jar ./app.jar
+COPY --from=builder /build/target/avatar_service-0.0.1-SNAPSHOT.jar ./app.jar
 
 # Altera o dono do ficheiro para o utilizador restrito
 RUN chown -R mapuser:mapgroup /app
